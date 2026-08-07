@@ -1,0 +1,31 @@
+# ---- Raw and derived imaging data (never commit) ----
+*.czi
+*.tif
+*.tiff
+*.nd2
+*.lif
+
+# ---- Analysis outputs ----
+*.mat
+output/
+*.fig
+*.png
+*.pdf
+*.eps
+
+# ---- Third-party packages (see README for install) ----
+bioformats/
+*.jar
+
+# ---- MATLAB artifacts ----
+*.asv
+*.m~
+*.mex*
+*.slxc
+slprj/
+codegen/
+
+# ---- OS cruft ----
+.DS_Store
+Thumbs.db
+._*
