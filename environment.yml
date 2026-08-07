@@ -1,0 +1,13 @@
+name: klf4-imaging
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      # Cellpose 3.x — do NOT upgrade to 4.x (Cellpose-SAM).
+      # models.Cellpose was removed in v4, and v4 segments differently,
+      # which shifts every nuclear-mean-referenced hub threshold.
+      - cellpose==3.1.1.1
+      - numpy<2
+      - torch
