@@ -14,8 +14,8 @@ Full documentation of every script, parameter, and output variable lives in
 ## 1. Setup
 
 Each pipeline script begins with a project directory setup block that adds its
-sibling folders to the MATLAB path. Two of those folders need to be populated with contents that are third-party software that cannot be
-redistributed here, and must be installed before anything will run.
+sibling folders to the MATLAB path. Two of those folders have contents, which are third-party software that cannot be
+redistributed here, and you must install them yourself before anything will run.
 
 ### 1.1 Bio-Formats (required by every script)
 
@@ -23,7 +23,8 @@ CZI files are read through Bio-Formats. Download `bioformats_package.jar` from
 
   https://www.openmicroscopy.org/bio-formats/downloads/
 
-and place it in `bioformats/`. The setup block
+and place it in `Image Analysis/bioformats/`, together with `ReadImage6D2.m`.
+The setup block
 registers the JAR with `javaaddpath`.
 
 Bio-Formats is distributed by the Open Microscopy Environment under the GPL and
@@ -36,7 +37,7 @@ It is not redistributed here. Download from
 
   https://vbfret.sourceforge.net/
 
-and place the package contents in `HMM fitting/`. Please cite
+and place the package contents in `Image Analysis/HMM fitting/`. Please cite
 Bronson et al., *Biophysical Journal* 97(12):3196–205 (2009).
 
 The vbFRET authors ask that the package not be further distributed without
@@ -55,8 +56,8 @@ which -all pca
 If a MATLAB function is shadowed, add and remove the vbFRET path around the HMM
 call rather than leaving it on the path for the whole session.
 
-`HMM_fit_fun.m` (the HMM fitting wrapper function) is included
-in `HMM fitting/`.
+`HMM_fit_fun.m` and `binary.m` (the wrapper and its binariser) **are** included
+in `Image Analysis/HMM fitting/`.
 
 ### 1.3 Cellpose (required for anything that segments nuclei)
 
@@ -96,7 +97,7 @@ Optimization, and Statistics and Machine Learning toolboxes.
 
 ### 1.5 Other third-party functions
 
-`functions/` contains helper code from several sources. `pkfnd` and `cntrd` are
+`Image Analysis/functions/` contains helper code from several sources. `pkfnd` and `cntrd` are
 the Crocker–Grier particle-tracking routines; `feretDiameters` and a few others
 come from the MATLAB File Exchange. Original attributions are preserved in the
 function headers.
@@ -105,6 +106,7 @@ function headers.
 
 ## 2. Repository layout
 
+```
 Klf4_transcription_imaging/
 ├── README.md
 ├── LICENSE
@@ -135,14 +137,18 @@ Klf4_transcription_imaging/
 │   ├── Bead_tracking.m
 │   │
 │   ├── functions/                    # shared helper functions
-│   ├── bioformats/                   # Add bioformats_package.jar before starting (1.1)
-│   └── HMM fitting/                  # wrapper function only, add vbFRET package before starting (1.2)
+│   ├── bioformats/                   # EMPTY — add bioformats_package.jar (1.1)
+│   └── HMM fitting/                  # wrapper only — add vbFRET (1.2)
 │
 └── Data Analysis/                    # downstream analysis and plotting
-
 ```
-Scripts resolve these folders relative to their own location, so the layout must
-be preserved. Run scripts from their own directory.
+
+Every pipeline script resolves `functions/`, `bioformats/`, and `HMM fitting/`
+relative to its own location, so these three folders must stay beside the
+scripts inside `Image Analysis/`. Run each script from that directory.
+
+`Bead_tracking.m` and the two `singleImages` variants are present but not yet
+covered by the metadata files.
 
 ---
 
@@ -184,6 +190,12 @@ across scripts:
   centroid refinement gives one stable sub-pixel centre per hub, which is what
   sizing, tracking, and distance measurements need.
 
+Manders coefficients use a gentler 2× nuclear mean threshold for the partner
+channel: the 3× rule defines hub identity, the 2× rule defines where the partner
+protein is detectable at all.
+
+Every threshold is referenced to the host nucleus's own mean intensity, so
+counts from the two regimes are not interchangeable and should not be pooled.
 
 ---
 
