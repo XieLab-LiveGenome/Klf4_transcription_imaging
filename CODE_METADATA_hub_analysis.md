@@ -9,7 +9,6 @@ output_format: MATLAB .mat
 lateral_pixel_size_um: 0.0313
 distance_units_reported: nanometres
 detection_regimes: DBSCAN (hub counts and photometry) | 3x nuclear mean intensity (all other scripts)
-status: semi-final
 ---
 
 # Code metadata — hub analysis
