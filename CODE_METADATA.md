@@ -9,7 +9,6 @@ output_format: MATLAB .mat
 lateral_pixel_size_um: 0.0313
 axial_pixel_size_um: read from CZI metadata (metadata.ScaleZ)
 distance_units_reported: nanometres
-status: semi-final
 ---
 
 # Code metadata — tracking pipelines
