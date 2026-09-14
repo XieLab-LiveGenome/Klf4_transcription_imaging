@@ -396,21 +396,3 @@ set by hand, so it must be checked against the input path before each run.
   `pkfnd`/`cntrd`/`local_background_2Dg` rather than `detectPunctaDBSCAN`.
 
 ---
-
-## 7. Draft text for Methods / Code Availability
-
-> Nuclei were segmented with Cellpose. Hub counts and per-hub enrichment were
-> obtained by density-based clustering (DBSCAN) of nuclear puncta, with
-> intensities measured on the raw image and normalised to the mean intensity of
-> the host nucleus. For hub sizing, tracking, and colocalization, hubs were
-> detected as local intensity maxima exceeding three times the mean intensity of
-> their host nucleus and localised to sub-pixel precision by centroid refinement.
-> Hub size was quantified as the Feret diameter and as the FWHM of a
-> background-subtracted 2D Gaussian fit. Structural lifetimes were obtained by
-> linking hubs across frames after rigid-body registration of the nucleus, with
-> lifetimes edge-censored and summarised by Kaplan–Meier survival analysis.
-> Colocalization between BRD4 and MED14 hubs was classified by a 300 nm
-> centroid-proximity cutoff and quantified by per-hub Manders coefficients
-> computed against a two-fold nuclear-mean threshold in the partner channel. All
-> scripts and the parameter values used for each dataset are available at
-> [repository / DOI].
