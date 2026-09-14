@@ -326,15 +326,3 @@ output `.mat`.
 6. Output is written to `save_filename.mat` in the working directory.
 
 ---
-
-## 8. Draft text for the Code Availability statement
-
-> Image analysis was performed with custom MATLAB code. Loci were localised in
-> three dimensions by 2D peak detection and Gaussian fitting on maximum
-> intensity projections followed by 3D Gaussian refinement of the corresponding
-> z-stack subvolume; transcriptional states were called by two-state HMM fitting
-> of MS2 intensity traces; protein hubs were identified by adaptive intensity
-> thresholding and a nearest-neighbour search in the locus neighbourhood. All
-> pipeline scripts, helper functions, and the parameter values used for each
-> dataset are available at [repository / DOI]. Bio-Formats and Cellpose are
-> third-party dependencies and are not redistributed.
