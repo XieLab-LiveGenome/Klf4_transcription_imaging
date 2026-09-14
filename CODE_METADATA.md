@@ -268,54 +268,8 @@ Downstream analysis scripts read column 3 directly rather than re-running the HM
 
 ---
 
-## 6. Conventions, thresholds, and known limitations
 
-**Coordinates.** All image coordinates are `[x y]` (column, row), matching
-`track_spot2D` output. Lateral physical positions are `x·xpixel`; axial positions
-are `(z−1)·zpixel`, i.e. z is zero-based and xy is one-based. This offsets the
-absolute origin but not any reported separation, since all distances are
-differences within a frame.
-
-**Pixel size.** `xpixel` and `ypixel` are hard-coded to 0.0313 µm (Elyra 7 SIM,
-lattice reconstruction) rather than read from metadata; `zpixel` is taken from
-`metadata.ScaleZ`. Any dataset acquired at a different lateral sampling requires
-these constants to be edited.
-
-**Detection thresholds** (`m_enh`, `m_prom`, `m_MS2`) are fractions of the
-per-frame maximum, so they adapt to intensity but are sensitive to bright
-out-of-locus objects in the field. `nuc_ave` in the hub scripts is a per-movie
-background constant set by the operator (1500 and 4000 in the two deposited
-configurations) and must be re-set for a new acquisition or laser setting.
-
-**Axial spike filtering.** Frames whose axial displacement exceeds `thr_z`
-(0.3–0.6 µm depending on the frame interval), or whose z is negative, are
-replaced by the mean of their two neighbours. This is a bad-fit rejection step,
-not a smoothing step; it is applied once, non-iteratively, over frames 2 to
-`zs−1`, so the first and last frames are never corrected.
-
-**Missing frames.** The three-colour scripts carry the previous position forward
-when no punctum is detected; the four-colour script writes `NaN` and interpolates
-linearly. Trajectories from the two families are therefore not identically
-gap-handled, and comparisons should either be restricted to detected frames or
-use the detection flag (`MS2_score` column 1, `NaN` runs in `enh_xyz`).
-
-**Chained seeding.** Promoter, MS2, and hub searches are all seeded from the
-enhancer position. A lost enhancer track propagates to every other channel in
-that frame; the per-frame overlay exists so this is caught during the run.
-
-**Frame interval** is recorded in each script's header comment (5 s for the
-two- and three-colour E–P data; longer for the hub timecourses) and in
-`time_int` for the burst pipeline. It is not read from the CZI, so it should be
-verified against the acquisition metadata for each dataset.
-
-**Interactive steps.** `pick_TS_spots` and the seed coordinate `C_in` require an
-operator. Re-running an analysis reproducibly requires the printed
-`C_in_manual` block (emitted by `pick_TS_spots`) or the `C_in` saved in the
-output `.mat`.
-
----
-
-## 7. Reproducing a run
+## 6. Reproducing a run
 
 1. Place `functions/`, `bioformats/`, and `HMM fitting/` beside the pipeline
    script; the script adds them to the path and registers the Bio-Formats JAR.
